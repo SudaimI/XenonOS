@@ -1,43 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>XenonOS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XenonOS</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#070b12;color:#e8f3ff;line-height:1.7}
+header{padding:70px 20px;text-align:center;background:linear-gradient(135deg,#0b1f3a,#001b2f)}
+h1{font-size:3.2rem;color:#5db7ff;margin:0}
+h2{color:#69d17d;border-bottom:2px solid #1d4f7a;padding-bottom:6px}
+.container{max-width:1050px;margin:auto;padding:30px}
+.card{background:#111827;border:1px solid #20486f;border-radius:14px;padding:24px;margin:22px 0;box-shadow:0 0 18px rgba(0,120,255,.15)}
+code,pre{background:#0a1220;color:#73ff9a;padding:10px;border-radius:8px;display:block;overflow:auto}
+a.button{display:inline-block;background:#1d7dff;color:#fff;padding:14px 24px;border-radius:10px;text-decoration:none;font-weight:bold;margin:8px}
+ul{padding-left:22px}
+footer{text-align:center;padding:30px;color:#9fb3c8}
+.note{border-left:4px solid #69d17d;padding-left:12px}
+</style>
 </head>
-
-<body style="background:#101010;color:white;font-family:Arial;text-align:center;">
-
+<body>
+<header>
 <h1>XenonOS</h1>
+<p>An Arch-based desktop focused on speed, simplicity, and a polished GNOME experience.</p>
+<a class="button" href="#install">Install Guide</a>
+<a class="button" href="#">Download (Coming Soon)</a>
+</header>
+<div class="container">
 
-<h2>Modern. Fast. Beautiful.</h2>
+<div class="card">
+<h2>Features</h2>
+<ul>
+<li>GNOME Desktop</li>
+<li>Dash to Panel + ArcMenu</li>
+<li>Brave Browser</li>
+<li>Custom Xenon branding & Plymouth boot screen</li>
+<li>Built using Penguins Eggs</li>
+</ul>
+</div>
 
-<p>
-A custom Arch Linux distribution focused on performance,
-design, and simplicity.
-</p>
+<div class="card note">
+<b>Installer Notice</b><br>
+Older XenonOS previews used Calamares. Current releases use <b>Penguins Eggs (Krill)</b> because it more reliably preserves the customized XenonOS desktop.
+</div>
 
-<hr>
+<div class="card" id="install">
+<h2>Installing XenonOS</h2>
 
-<h2>Download</h2>
+<h3>1. Boot the Live ISO</h3>
+<p>Boot the USB and wait for the XenonOS desktop to load.</p>
 
-<p>Coming Soon</p>
+<h3>2. Check your display resolution</h3>
+<p>If anything looks stretched or blurry:</p>
+<ul>
+<li>Open <b>Settings → Displays</b></li>
+<li>Select the correct resolution.</li>
+<li>Apply the changes.</li>
+</ul>
 
-<hr>
+<h3>3. Open Terminal</h3>
+<p>Open Console from ArcMenu or the taskbar.</p>
 
-<h2>Screenshots</h2>
+<h3>4. Start Krill</h3>
+<pre>sudo eggs krill</pre>
 
-<p>Coming Soon</p>
+<p>The installer will guide you through:</p>
+<ul>
+<li>Language</li>
+<li>Keyboard</li>
+<li>Disk Selection</li>
+<li>User Creation</li>
+<li>Password</li>
+<li>Hostname</li>
+<li>Summary</li>
+</ul>
 
-<hr>
+<p>Verify everything carefully before confirming installation.</p>
 
-<h2>Documentation</h2>
+<h3>5. Wait for Installation</h3>
+<p>Krill will format the selected drive, install XenonOS, configure the bootloader, and complete setup automatically.</p>
 
-<p>Coming Soon</p>
+<h3>6. Restart</h3>
+<p>Restart the computer and remove the USB when prompted.</p>
 
-<hr>
+<h3>7. Log Into Your User</h3>
+<p><b>Do NOT log into the root account.</b> Log into the user account you created during installation.</p>
 
-<h2>Changelog</h2>
+<h3>8. Optional Tweaks</h3>
+<p>Open <b>Tweaks → Appearance</b>.</p>
+<p>Recommended cursor theme:</p>
+<ul>
+<li>Breeze Cursors</li>
+</ul>
 
-<p>Coming Soon</p>
+<h3>9. Enjoy XenonOS</h3>
+<p>Your installation is complete.</p>
+</div>
 
+<div class="card">
+<h2>Troubleshooting</h2>
+<ul>
+<li>If the desktop resolution looks wrong, adjust it in Settings → Displays.</li>
+<li>If you closed the installer, simply run <code>sudo eggs krill</code> again.</li>
+<li>If you accidentally log into root, sign out and use your normal account.</li>
+</ul>
+</div>
+
+<footer>
+© XenonOS Project
+</footer>
+</div>
 </body>
 </html>
