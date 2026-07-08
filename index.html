@@ -53,54 +53,93 @@ Older XenonOS previews used Calamares. Current releases use <b>Penguins Eggs (Kr
 <h2>Installing XenonOS</h2>
 <a href="https://drive.google.com/uc?export=download&id=1CxuBNjBbaSo11lZ95ysh1mhnvlR3V--m" download>Download XenonOS ISO</a>   
 
-<h3>1. Boot the Live ISO</h3>
-<p>Boot the USB and wait for the XenonOS desktop to load.</p>
+<div class="card" id="install">
 
-<h3>2. Check your display resolution</h3>
-<p>If anything looks stretched or blurry:</p>
+<h2>Installing XenonOS</h2>
+
+<a href="https://drive.google.com/drive/folders/1HF3KqU5eD4lDn-oxNWGcywFIsAh0prx2?usp=drive_link" target="_blank">
+Download XenonOS ISO
+</a>
+
+<h3>1. Boot the Live USB</h3>
+
+<p>Boot from your XenonOS USB and wait for the desktop to fully load.</p>
+
+<h3>2. Check Your Display Resolution</h3>
+
+<p>If the desktop appears stretched or blurry:</p>
+
 <ul>
 <li>Open <b>Settings → Displays</b></li>
-<li>Select the correct resolution.</li>
-<li>Apply the changes.</li>
+<li>Select your monitor's native resolution.</li>
+<li>Click <b>Apply</b>.</li>
 </ul>
 
-<h3>3. Open Terminal</h3>
-<p>Open Console from ArcMenu or the taskbar.</p>
+<h3>3. Launch the XenonOS Installer (Recommended)</h3>
 
-<h3>4. Start Krill</h3>
-<pre>sudo eggs krill</pre>
+<p>Double-click the <b>Install XenonOS</b> icon on the desktop.</p>
 
-<p>The installer will guide you through:</p>
+<p>The Calamares installer will guide you through:</p>
+
 <ul>
 <li>Language</li>
-<li>Keyboard</li>
-<li>Disk Selection</li>
-<li>User Creation</li>
-<li>Password</li>
-<li>Hostname</li>
-<li>Summary</li>
+<li>Location & Timezone</li>
+<li>Keyboard Layout</li>
+<li>Disk Partitioning</li>
+<li>User Account Creation</li>
+<li>Installation Summary</li>
 </ul>
 
-<p>Verify everything carefully before confirming installation.</p>
+<p>Review everything carefully before clicking <b>Install</b>.</p>
 
-<h3>5. Wait for Installation</h3>
-<p>Krill will format the selected drive, install XenonOS, configure the bootloader, and complete setup automatically.</p>
+<h3>4. Wait for Installation</h3>
 
-<h3>6. Restart</h3>
-<p>Restart the computer and remove the USB when prompted.</p>
+<p>Calamares will copy XenonOS to your drive, install the bootloader, and configure your system automatically.</p>
 
-<h3>7. Log Into Your User</h3>
+<h3>5. Restart</h3>
+
+<p>When the installation finishes, restart your computer and remove the USB drive.</p>
+
+<h3>6. Log Into Your Account</h3>
+
 <p><b>Do NOT log into the root account.</b> Log into the user account you created during installation.</p>
 
-<h3>8. Optional Tweaks</h3>
-<p>Open <b>Tweaks → Appearance</b>.</p>
+<hr>
+
+<h2>If Calamares Doesn't Work</h2>
+
+<p>If the Calamares installer fails to launch or closes unexpectedly, XenonOS includes a backup installer called <b>Penguins Eggs Krill</b>.</p>
+
+<hh3>1. Open Terminal</h3>
+
+<p>Open Terminal from ArcMenu or the Applications menu.</p>
+
+<h3>2. Run the Backup Installer</h3>
+
+<pre>sudo eggs krill</pre>
+
+<p>Press <b>Enter</b> and follow the prompts to complete the installation.</p>
+
+<p>Krill will guide you through selecting your language, keyboard layout, installation drive, user account, and system configuration.</p>
+
+<h3>3. Finish Installation</h3>
+
+<p>After Krill completes, restart your computer, remove the USB drive, and log into your new XenonOS installation.</p>
+
+<h3>Optional Tweaks</h3>
+
+<p>Open <b>GNOME Tweaks → Appearance</b>.</p>
+
 <p>Recommended cursor theme:</p>
+
 <ul>
-<li>Breeze Cursors</li>
+<li>Breeze</li>
 </ul>
 
-<h3>9. Enjoy XenonOS</h3>
-<p>Your installation is complete.</p>
+<h3>Enjoy XenonOS!</h3>
+
+<p>Your installation is complete. Welcome to XenonOS!</p>
+
 </div>
 
 <div class="card">
