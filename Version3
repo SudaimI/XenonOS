@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xenon Desktop</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: sans-serif;
+    }
+
+    body {
+        background-image: url('https://preview.redd.it/artimis-ii-recent-image-of-the-moon-earth-edited-and-v0-qk1l8f7j94xg1.jpeg?width=1080&crop=smart&auto=webp&s=02e2436e55e0d5186e78c431301c6d9bfedb1ab3');
+        background-size: contain;
+        background-position: center 70%;
+        background-repeat: no-repeat;
+        background-color: black;
+    }
+
+    .desktop-window {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        overflow: hidden;
+        resize: both;
+        min-width: 350px;
+        min-height: 250px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    #browserWindow {
+        top: 150px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 700px;
+        height: 500px;
+        z-index: 11;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .titlebar {
+        height: 38px;
+        background: rgba(40, 40, 40, 0.72);
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 0 8px 0 12px;
+        cursor: move;
+        user-select: none;
+        flex-shrink: 0;
+    }
+
+    .title {
+        flex: 1;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .window-controls {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .window-button {
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .window-button:hover {
+        filter: brightness(1.25);
+    }
+
+    .minimize-button {
+        background: rgb(255, 210, 0);
+        color: black;
+    }
+
+    .close-button {
+        background: rgb(255, 4, 0);
+    }
+
+    #browserWindow .content {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+    }
+
+    .browser-bar {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    #urlBar {
+        flex: 1;
+        min-width: 0;
+        padding: 8px 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.92);
+        color: black;
+        outline: none;
+        font-size: 14px;
+    }
+
+    #urlBar:focus {
+        border-color: white;
+    }
+
+    #goBtn {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        background: #222;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    #goBtn:hover {
+        background: #333;
+    }
+
+    #browserFrame {
+        flex: 1;
+        width: 100%;
+        min-height: 0;
+        margin-top: 12px;
+        border: none;
+        border-radius: 5px;
+        background: white;
+    }
+
+    #taskbar {
+        position: fixed;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(35, 35, 35, 0.72);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        padding: 8px 12px;
+        border-radius: 50px;
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        z-index: 1000;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .taskbar-button {
+        background: #121212;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 24px;
+        font-size: 13px;
+    }
+
+    .taskbar-button:hover {
+        background: #292929;
+    }
+
+    #startButton {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    #startIcon {
+        font-size: 17px;
+    }
+
+    #startMenu {
+        position: fixed;
+        bottom: 78px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 360px;
+        padding: 16px;
+        background: rgba(20, 20, 20, 0.88);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 18px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+        z-index: 999;
+        display: none;
+    }
+
+    #startMenu.open {
+        display: block;
+    }
+
+    .start-title {
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 4px 6px 14px;
+    }
+
+    .app-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .app-button {
+        border: none;
+        background: rgba(255, 255, 255, 0.07);
+        color: white;
+        border-radius: 12px;
+        padding: 16px 8px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 105px;
+    }
+
+    .app-button:hover {
+        background: rgba(255, 255, 255, 0.14);
+    }
+
+    .app-icon {
+        font-size: 32px;
+        line-height: 1;
+    }
+
+    .app-name {
+        font-size: 13px;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div id="browserWindow" class="desktop-window">
+
+    <div id="browserTitlebar" class="titlebar">
+
+        <span class="title">Browser</span>
+
+        <div class="window-controls">
+
+            <button
+                id="browserMinimizeBtn"
+                class="window-button minimize-button"
+                title="Minimize">
+                _
+            </button>
+
+            <button
+                id="browserCloseBtn"
+                class="window-button close-button"
+                title="Close">
+                X
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="browser-bar">
+
+            <input
+                type="text"
+                id="urlBar"
+                placeholder="https://example.com"
+                value="https://example.com"
+            >
+
+            <button id="goBtn">
+                Go
+            </button>
+
+        </div>
+
+        <iframe
+            id="browserFrame"
+            src="https://example.com"
+            title="Browser">
+        </iframe>
+
+    </div>
+
+</div>
+
+<div id="startMenu">
+
+    <div class="start-title">
+        Applications
+    </div>
+
+    <div class="app-grid">
+
+        <button id="startBrowser" class="app-button">
+            <span class="app-icon">🌐</span>
+            <span class="app-name">Browser</span>
+        </button>
+
+        <button id="startGame" class="app-button">
+            <span class="app-icon">🎮</span>
+            <span class="app-name">Game</span>
+        </button>
+
+        <button id="startMusic" class="app-button">
+            <span class="app-icon">🎵</span>
+            <span class="app-name">Music</span>
+        </button>
+
+    </div>
+
+</div>
+
+<div id="taskbar">
+
+    <button
+        id="startButton"
+        class="taskbar-button">
+        <span id="startIcon">⊞</span>
+        <span>Start</span>
+    </button>
+
+    <button
+        id="reopenBrowserBtn"
+        class="taskbar-button">
+        Browser
+    </button>
+
+</div>
+
+<script>
+
+    const browserWindow =
+        document.getElementById("browserWindow");
+
+    const browserTitlebar =
+        document.getElementById("browserTitlebar");
+
+    const browserCloseBtn =
+        document.getElementById("browserCloseBtn");
+
+    const browserMinimizeBtn =
+        document.getElementById("browserMinimizeBtn");
+
+    const reopenBrowserBtn =
+        document.getElementById("reopenBrowserBtn");
+
+    const urlBar =
+        document.getElementById("urlBar");
+
+    const goBtn =
+        document.getElementById("goBtn");
+
+    const browserFrame =
+        document.getElementById("browserFrame");
+
+    const startButton =
+        document.getElementById("startButton");
+
+    const startMenu =
+        document.getElementById("startMenu");
+
+    const startBrowser =
+        document.getElementById("startBrowser");
+
+    const startGame =
+        document.getElementById("startGame");
+
+    const startMusic =
+        document.getElementById("startMusic");
+
+
+    let isDraggingBrowser = false;
+    let offsetXB = 0;
+    let offsetYB = 0;
+
+
+    browserTitlebar.addEventListener("mousedown", (e) => {
+
+        if (e.target.closest(".window-button")) {
+            return;
+        }
+
+        isDraggingBrowser = true;
+
+        offsetXB =
+            e.clientX -
+            browserWindow.offsetLeft;
+
+        offsetYB =
+            e.clientY -
+            browserWindow.offsetTop;
+
+        browserWindow.style.zIndex = 101;
+
+    });
+
+
+    document.addEventListener("mousemove", (e) => {
+
+        if (isDraggingBrowser) {
+
+            browserWindow.style.left =
+                `${e.clientX - offsetXB}px`;
+
+            browserWindow.style.top =
+                `${e.clientY - offsetYB}px`;
+
+            browserWindow.style.transform =
+                "none";
+
+        }
+
+    });
+
+
+    document.addEventListener("mouseup", () => {
+
+        isDraggingBrowser = false;
+
+    });
+
+
+    browserCloseBtn.addEventListener("click", () => {
+
+        browserWindow.classList.add("hidden");
+
+    });
+
+
+    browserMinimizeBtn.addEventListener("click", () => {
+
+        browserWindow.classList.add("hidden");
+
+    });
+
+
+    reopenBrowserBtn.addEventListener("click", () => {
+
+        browserWindow.classList.remove("hidden");
+
+        browserWindow.style.zIndex = 101;
+
+    });
+
+
+    startButton.addEventListener("click", (e) => {
+
+        e.stopPropagation();
+
+        startMenu.classList.toggle("open");
+
+    });
+
+
+    startBrowser.addEventListener("click", () => {
+
+        browserWindow.classList.remove("hidden");
+
+        browserWindow.style.zIndex = 101;
+
+        startMenu.classList.remove("open");
+
+    });
+
+
+    startGame.addEventListener("click", () => {
+
+        startMenu.classList.remove("open");
+
+    });
+
+
+    startMusic.addEventListener("click", () => {
+
+        startMenu.classList.remove("open");
+
+    });
+
+
+    document.addEventListener("click", (e) => {
+
+        if (
+            !startMenu.contains(e.target) &&
+            e.target !== startButton
+        ) {
+            startMenu.classList.remove("open");
+        }
+
+    });
+
+
+    function loadWebsite() {
+
+        let url =
+            urlBar.value.trim();
+
+        if (!url) {
+            return;
+        }
+
+        if (
+            !url.startsWith("http://") &&
+            !url.startsWith("https://")
+        ) {
+            url = "https://" + url;
+        }
+
+        urlBar.value = url;
+
+        browserFrame.src = url;
+
+    }
+
+
+    goBtn.addEventListener("click", loadWebsite);
+
+
+    urlBar.addEventListener("keydown", (e) => {
+
+        if (e.key === "Enter") {
+            loadWebsite();
+        }
+
+    });
+
+</script>
+```
+
+</body>
+</html>
